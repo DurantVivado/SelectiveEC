@@ -40,7 +40,7 @@ abstract class BlockReconstructionWork {
    * An erasure coding reconstruction task has multiple source nodes.
    * A replication task only has 1 source node, stored on top of the array
    */
-  private final DatanodeDescriptor[] srcNodes;
+  private DatanodeDescriptor[] srcNodes;
   /** Nodes containing the block; avoid them in choosing new targets */
   private final List<DatanodeDescriptor> containingNodes;
   /** Required by {@link BlockPlacementPolicy#chooseTarget} */
@@ -68,6 +68,10 @@ abstract class BlockReconstructionWork {
     this.additionalReplRequired = additionalReplRequired;
     this.priority = priority;
     this.targets = null;
+  }
+
+  void setSrcNodes(DatanodeDescriptor[] srcNodes){
+    this.srcNodes=srcNodes;
   }
 
   DatanodeStorageInfo[] getTargets() {

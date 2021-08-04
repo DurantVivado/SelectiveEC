@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.Set;
 
 class ErasureCodingWork extends BlockReconstructionWork {
-  private final byte[] liveBlockIndicies;
+  private byte[] liveBlockIndicies;
   private final String blockPoolId;
 
   public ErasureCodingWork(String blockPoolId, BlockInfo block,
@@ -52,11 +52,18 @@ class ErasureCodingWork extends BlockReconstructionWork {
     return liveBlockIndicies;
   }
 
+  void setLiveBlockIndicies(byte[] liveBlockIndicies){
+    this.liveBlockIndicies=liveBlockIndicies;
+  }
+
   @Override
   void chooseTargets(BlockPlacementPolicy blockplacement,
       BlockStoragePolicySuite storagePolicySuite,
       Set<Node> excludedNodes) {
     // TODO: new placement policy for EC considering multiple writers
+
+//    System.out.println("ErasureCodingWork-chooseTargets()-excludedNodes.size():"+excludedNodes.size());
+
     DatanodeStorageInfo[] chosenTargets = blockplacement.chooseTarget(
         getSrcPath(), getAdditionalReplRequired(), getSrcNodes()[0],
         getLiveReplicaStorages(), false, excludedNodes, getBlockSize(),
